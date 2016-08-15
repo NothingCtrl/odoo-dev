@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DataSourceManagerImpl" format="xml" hash="4001632738">
+    <data-source source="LOCAL" name="PostgreSQL - odoo-test@localhost" uuid="d5e5f3a1-294c-4dbc-905a-5158a0213c23">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://localhost:5432/odoo-test</jdbc-url>
+    </data-source>
+  </component>
+</project>

@@ -24,3 +24,5 @@ class BookCategory(models.Model):
             raise models.ValidationError(
                 'Error! You cannot create recuisive categories.'
             )
+
+

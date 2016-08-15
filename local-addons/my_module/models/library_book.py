@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from openerp import models, fields
 from openerp.addons import decimal_precision as dp
+from openerp import api
 
 
 class LibraryBook(models.Model):
@@ -74,6 +75,23 @@ class LibraryBook(models.Model):
                  u"%s (%s)" % (record.name, record.date_release)
                  ))
         return result
+
+    # Note: neu database da tao roi moi them dieu kieu sql thi khong thay duoc ap dung
+    # pic database khong thay ap dung dieu kien: https://goo.gl/VroXZo
+    # pic database ap dung dieu kien (tao moi database sau khi add rule): https://goo.gl/2PYM4c
+    _sql_constraints = [
+        ('name_uniq',
+         'UNIQUE (name)',
+         'Book title must be unique.')
+    ]
+
+    @api.constrains('date_release')
+    def _check_release_date(self):
+        for r in self:
+            if r.date_release > fields.Date.today():
+                raise models.ValidationError(
+                    'Release date must be in the past'
+                )
 
 
 class ResPartner(models.Model):

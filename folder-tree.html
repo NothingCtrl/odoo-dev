@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+<head>
+ <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+ <meta name="Author" content="Made by 'tree'">
+ <meta name="GENERATOR" content="$Version: $ tree v1.7.0 (c) 1996 - 2014 by Steve Baker, Thomas Moore, Francesc Rocher, Florian Sesser, Kyosuke Tokoro $">
+ <title>Directory Tree</title>
+ <style type="text/css">
+  <!-- 
+  BODY { font-family : ariel, monospace, sans-serif; }
+  P { font-weight: normal; font-family : ariel, monospace, sans-serif; color: black; background-color: transparent;}
+  B { font-weight: normal; color: black; background-color: transparent;}
+  A:visited { font-weight : normal; text-decoration : none; background-color : transparent; margin : 0px 0px 0px 0px; padding : 0px 0px 0px 0px; display: inline; }
+  A:link    { font-weight : normal; text-decoration : none; margin : 0px 0px 0px 0px; padding : 0px 0px 0px 0px; display: inline; }
+  A:hover   { color : #000000; font-weight : normal; text-decoration : underline; background-color : yellow; margin : 0px 0px 0px 0px; padding : 0px 0px 0px 0px; display: inline; }
+  A:active  { color : #000000; font-weight: normal; background-color : transparent; margin : 0px 0px 0px 0px; padding : 0px 0px 0px 0px; display: inline; }
+  .VERSION { font-size: small; font-family : arial, sans-serif; }
+  .NORM  { color: black;  background-color: transparent;}
+  .FIFO  { color: purple; background-color: transparent;}
+  .CHAR  { color: yellow; background-color: transparent;}
+  .DIR   { color: blue;   background-color: transparent;}
+  .BLOCK { color: yellow; background-color: transparent;}
+  .LINK  { color: aqua;   background-color: transparent;}
+  .SOCK  { color: fuchsia;background-color: transparent;}
+  .EXEC  { color: green;  background-color: transparent;}
+  -->
+ </style>
+</head>
+<body>
+	<h1>Directory Tree</h1><p>
+	<a href="folder-tree.html">folder-tree.html</a><br>
+	├── <a href="folder-tree.html/bin/">bin</a><br>
+	├── <a href="folder-tree.html/env/">env</a><br>
+	│   ├── <a href="folder-tree.html/env/bin/">bin</a><br>
+	│   ├── <a href="folder-tree.html/env/include/">include</a><br>
+	│   │   ├── <a href="folder-tree.html/env/include/python2.7/">python2.7</a><br>
+	│   │   └── <a href="folder-tree.html/env/include/site/">site</a><br>
+	│   ├── <a href="folder-tree.html/env/lib/">lib</a><br>
+	│   │   └── <a href="folder-tree.html/env/lib/python2.7/">python2.7</a><br>
+	│   ├── <a href="folder-tree.html/env/local/">local</a><br>
+	│   └── <a href="folder-tree.html/env/share/">share</a><br>
+	│   &nbsp;&nbsp;&nbsp; ├── <a href="folder-tree.html/env/share/man/">man</a><br>
+	│   &nbsp;&nbsp;&nbsp; └── <a href="folder-tree.html/env/share/python-wheels/">python-wheels</a><br>
+	├── <a href="folder-tree.html/filestore/">filestore</a><br>
+	│   ├── <a href="folder-tree.html/filestore/addons/">addons</a><br>
+	│   │   └── <a href="folder-tree.html/filestore/addons/9.0/">9.0</a><br>
+	│   ├── <a href="folder-tree.html/filestore/filestore/">filestore</a><br>
+	│   │   ├── <a href="folder-tree.html/filestore/filestore/OdooNew/">OdooNew</a><br>
+	│   │   ├── <a href="folder-tree.html/filestore/filestore/odootest/">odootest</a><br>
+	│   │   ├── <a href="folder-tree.html/filestore/filestore/odoo-test/">odoo-test</a><br>
+	│   │   └── <a href="folder-tree.html/filestore/filestore/odootest2/">odootest2</a><br>
+	│   └── <a href="folder-tree.html/filestore/sessions/">sessions</a><br>
+	├── <a href="folder-tree.html/.git/">.git</a><br>
+	│   ├── <a href="folder-tree.html/.git/branches/">branches</a><br>
+	│   ├── <a href="folder-tree.html/.git/hooks/">hooks</a><br>
+	│   ├── <a href="folder-tree.html/.git/info/">info</a><br>
+	│   ├── <a href="folder-tree.html/.git/logs/">logs</a><br>
+	│   │   └── <a href="folder-tree.html/.git/logs/refs/">refs</a><br>
+	│   ├── <a href="folder-tree.html/.git/objects/">objects</a><br>
+	│   │   ├── <a href="folder-tree.html/.git/objects/0d/">0d</a><br>
+	│   │   ├── <a href="folder-tree.html/.git/objects/0f/">0f</a><br>
+	│   │   ├── <a href="folder-tree.html/.git/objects/12/">12</a><br>
+	│   │   ├── <a href="folder-tree.html/.git/objects/18/">18</a><br>
+	│   │   ├── <a href="folder-tree.html/.git/objects/1e/">1e</a><br>
+	│   │   ├── <a href="folder-tree.html/.git/objects/22/">22</a><br>
+	│   │   ├── <a href="folder-tree.html/.git/objects/25/">25</a><br>
+	│   │   ├── <a href="folder-tree.html/.git/objects/2f/">2f</a><br>
+	│   │   ├── <a href="folder-tree.html/.git/objects/36/">36</a><br>
+	│   │   ├── <a href="folder-tree.html/.git/objects/37/">37</a><br>
+	│   │   ├── <a href="folder-tree.html/.git/objects/3b/">3b</a><br>
+	│   │   ├── <a href="folder-tree.html/.git/objects/3d/">3d</a><br>
+	│   │   ├── <a href="folder-tree.html/.git/objects/3f/">3f</a><br>
+	│   │   ├── <a href="folder-tree.html/.git/objects/40/">40</a><br>
+	│   │   ├── <a href="folder-tree.html/.git/objects/41/">41</a><br>
+	│   │   ├── <a href="folder-tree.html/.git/objects/42/">42</a><br>
+	│   │   ├── <a href="folder-tree.html/.git/objects/45/">45</a><br>
+	│   │   ├── <a href="folder-tree.html/.git/objects/46/">46</a><br>
+	│   │   ├── <a href="folder-tree.html/.git/objects/4a/">4a</a><br>
+	│   │   ├── <a href="folder-tree.html/.git/objects/4b/">4b</a><br>
+	│   │   ├── <a href="folder-tree.html/.git/objects/51/">51</a><br>
+	│   │   ├── <a href="folder-tree.html/.git/objects/52/">52</a><br>
+	│   │   ├── <a href="folder-tree.html/.git/objects/53/">53</a><br>
+	│   │   ├── <a href="folder-tree.html/.git/objects/58/">58</a><br>
+	│   │   ├── <a href="folder-tree.html/.git/objects/5c/">5c</a><br>
+	│   │   ├── <a href="folder-tree.html/.git/objects/60/">60</a><br>
+	│   │   ├── <a href="folder-tree.html/.git/objects/6a/">6a</a><br>
+	│   │   ├── <a href="folder-tree.html/.git/objects/71/">71</a><br>
+	│   │   ├── <a href="folder-tree.html/.git/objects/73/">73</a><br>
+	│   │   ├── <a href="folder-tree.html/.git/objects/79/">79</a><br>
+	│   │   ├── <a href="folder-tree.html/.git/objects/85/">85</a><br>
+	│   │   ├── <a href="folder-tree.html/.git/objects/8d/">8d</a><br>
+	│   │   ├── <a href="folder-tree.html/.git/objects/99/">99</a><br>
+	│   │   ├── <a href="folder-tree.html/.git/objects/9a/">9a</a><br>
+	│   │   ├── <a href="folder-tree.html/.git/objects/9d/">9d</a><br>
+	│   │   ├── <a href="folder-tree.html/.git/objects/9f/">9f</a><br>
+	│   │   ├── <a href="folder-tree.html/.git/objects/a3/">a3</a><br>
+	│   │   ├── <a href="folder-tree.html/.git/objects/a5/">a5</a><br>
+	│   │   ├── <a href="folder-tree.html/.git/objects/ad/">ad</a><br>
+	│   │   ├── <a href="folder-tree.html/.git/objects/b4/">b4</a><br>
+	│   │   ├── <a href="folder-tree.html/.git/objects/b5/">b5</a><br>
+	│   │   ├── <a href="folder-tree.html/.git/objects/b6/">b6</a><br>
+	│   │   ├── <a href="folder-tree.html/.git/objects/c3/">c3</a><br>
+	│   │   ├── <a href="folder-tree.html/.git/objects/c6/">c6</a><br>
+	│   │   ├── <a href="folder-tree.html/.git/objects/c7/">c7</a><br>
+	│   │   ├── <a href="folder-tree.html/.git/objects/cd/">cd</a><br>
+	│   │   ├── <a href="folder-tree.html/.git/objects/d6/">d6</a><br>
+	│   │   ├── <a href="folder-tree.html/.git/objects/e0/">e0</a><br>
+	│   │   ├── <a href="folder-tree.html/.git/objects/e1/">e1</a><br>
+	│   │   ├── <a href="folder-tree.html/.git/objects/e6/">e6</a><br>
+	│   │   ├── <a href="folder-tree.html/.git/objects/e7/">e7</a><br>
+	│   │   ├── <a href="folder-tree.html/.git/objects/eb/">eb</a><br>
+	│   │   ├── <a href="folder-tree.html/.git/objects/f0/">f0</a><br>
+	│   │   ├── <a href="folder-tree.html/.git/objects/f1/">f1</a><br>
+	│   │   ├── <a href="folder-tree.html/.git/objects/f5/">f5</a><br>
+	│   │   ├── <a href="folder-tree.html/.git/objects/f7/">f7</a><br>
+	│   │   ├── <a href="folder-tree.html/.git/objects/f9/">f9</a><br>
+	│   │   ├── <a href="folder-tree.html/.git/objects/ff/">ff</a><br>
+	│   │   ├── <a href="folder-tree.html/.git/objects/info/">info</a><br>
+	│   │   └── <a href="folder-tree.html/.git/objects/pack/">pack</a><br>
+	│   └── <a href="folder-tree.html/.git/refs/">refs</a><br>
+	│   &nbsp;&nbsp;&nbsp; ├── <a href="folder-tree.html/.git/refs/heads/">heads</a><br>
+	│   &nbsp;&nbsp;&nbsp; ├── <a href="folder-tree.html/.git/refs/remotes/">remotes</a><br>
+	│   &nbsp;&nbsp;&nbsp; └── <a href="folder-tree.html/.git/refs/tags/">tags</a><br>
+	├── <a href="folder-tree.html/.idea/">.idea</a><br>
+	│   ├── <a href="folder-tree.html/.idea/dictionaries/">dictionaries</a><br>
+	│   └── <a href="folder-tree.html/.idea/inspectionProfiles/">inspectionProfiles</a><br>
+	├── <a href="folder-tree.html/local/">local</a><br>
+	├── <a href="folder-tree.html/local-addons/">local-addons</a><br>
+	│   ├── <a href="folder-tree.html/local-addons/my_module/">my_module</a><br>
+	│   │   ├── <a href="folder-tree.html/local-addons/my_module/controllers/">controllers</a><br>
+	│   │   ├── <a href="folder-tree.html/local-addons/my_module/data/">data</a><br>
+	│   │   ├── <a href="folder-tree.html/local-addons/my_module/demo/">demo</a><br>
+	│   │   ├── <a href="folder-tree.html/local-addons/my_module/i18n/">i18n</a><br>
+	│   │   ├── <a href="folder-tree.html/local-addons/my_module/models/">models</a><br>
+	│   │   ├── <a href="folder-tree.html/local-addons/my_module/security/">security</a><br>
+	│   │   ├── <a href="folder-tree.html/local-addons/my_module/static/">static</a><br>
+	│   │   └── <a href="folder-tree.html/local-addons/my_module/views/">views</a><br>
+	│   └── <a href="folder-tree.html/local-addons/my_scaffolded/">my_scaffolded</a><br>
+	│   &nbsp;&nbsp;&nbsp; ├── <a href="folder-tree.html/local-addons/my_scaffolded/controllers/">controllers</a><br>
+	│   &nbsp;&nbsp;&nbsp; ├── <a href="folder-tree.html/local-addons/my_scaffolded/demo/">demo</a><br>
+	│   &nbsp;&nbsp;&nbsp; ├── <a href="folder-tree.html/local-addons/my_scaffolded/models/">models</a><br>
+	│   &nbsp;&nbsp;&nbsp; ├── <a href="folder-tree.html/local-addons/my_scaffolded/security/">security</a><br>
+	│   &nbsp;&nbsp;&nbsp; └── <a href="folder-tree.html/local-addons/my_scaffolded/views/">views</a><br>
+	├── <a href="folder-tree.html/logs/">logs</a><br>
+	├── <a href="folder-tree.html/my-odoo/">my-odoo</a><br>
+	│   └── <a href="folder-tree.html/my-odoo/src/">src</a><br>
+	│   &nbsp;&nbsp;&nbsp; └── <a href="folder-tree.html/my-odoo/src/partner-contact/">partner-contact</a><br>
+	└── <a href="folder-tree.html/src/">src</a><br>
+	&nbsp;&nbsp;&nbsp; └── <a href="folder-tree.html/src/odoo/">odoo</a><br>
+	&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; ├── <a href="folder-tree.html/src/odoo/addons/">addons</a><br>
+	&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; ├── <a href="folder-tree.html/src/odoo/debian/">debian</a><br>
+	&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; ├── <a href="folder-tree.html/src/odoo/doc/">doc</a><br>
+	&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; ├── <a href="folder-tree.html/src/odoo/.git/">.git</a><br>
+	&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; ├── <a href="folder-tree.html/src/odoo/.github/">.github</a><br>
+	&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; ├── <a href="folder-tree.html/src/odoo/openerp/">openerp</a><br>
+	&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; ├── <a href="folder-tree.html/src/odoo/setup/">setup</a><br>
+	&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; └── <a href="folder-tree.html/src/odoo/.tx/">.tx</a><br>
+	<br><br>
+	</p>
+	<p>
+
+126 directories
+	<br><br>
+	</p>
+	<hr>
+	<p class="VERSION">
+		 tree v1.7.0 © 1996 - 2014 by Steve Baker and Thomas Moore <br>
+		 HTML output hacked and copyleft © 1998 by Francesc Rocher <br>
+		 JSON output hacked and copyleft © 2014 by Florian Sesser <br>
+		 Charsets / OS/2 support © 2001 by Kyosuke Tokoro
+	</p>
+</body>
+</html>
+
