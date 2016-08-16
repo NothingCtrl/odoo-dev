@@ -31,8 +31,28 @@ class LibraryBook(models.Model):
     state = fields.Selection(
         [('draff', 'Not Available'),
          ('available', 'Available'),
+         ('borrowed', 'Borrowed'),
          ('lost', 'Lost')],
         'State')
+
+    @api.model
+    def is_allowed_transition(self, old_state, new_state):
+        allowed = [('draft', 'available'),
+                   ('available', 'borrowed'),
+                   ('borrowed', 'available'),
+                   ('available', 'lost'),
+                   ('borrowed', 'lost'),
+                   ('lost', 'available')]
+        return (old_state, new_state) in allowed
+
+    @api.multi
+    def change_state(self, new_state):
+        for book in self:
+            if book.is_allowed_transition(book.state, new_state):
+                book.state = new_state
+            else:
+                continue
+
     description = fields.Html(
         string='Description',
         # optional:
@@ -147,6 +167,11 @@ class LibraryBook(models.Model):
         selection=_referencable_models,
         string='Reference Document'
     )
+
+    @api.model
+    def get_all_library_members(self):
+        library_member_model = self.env['library.member']
+        return library_member_model.search([])
 
 
 class ResPartner(models.Model):
