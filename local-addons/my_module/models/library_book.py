@@ -6,8 +6,18 @@ from openerp.fields import Date as fDate
 from datetime import timedelta as td
 
 
+class BaseArchive(models.AbstractModel):
+    _name = 'base.archive'
+    active = fields.Boolean(default=True)
+
+    def do_archive(self):
+        for record in self:
+            record.active = not record.active
+
+
 class LibraryBook(models.Model):
     _name = 'library.book'
+    _inherit = ['base.archive']
     _description = 'Library Book'
     _order = 'date_release desc, name'
     _rec_name = 'short_name'
@@ -67,6 +77,7 @@ class LibraryBook(models.Model):
         context={},
         domain=[],
     )
+
     age_days = fields.Float(
         string='Days Since Release',
         compute='_compute_age',
@@ -74,6 +85,30 @@ class LibraryBook(models.Model):
         search='_search_age',
         store=False,
         compute_sudo=False,
+    )
+
+    @api.depends('date_release')
+    def _compute_age(self):
+        today = fDate.from_string(fDate.today())
+        for book in self.filtered('date_release'):
+            delta = (fDate.from_string(book.date_release) - today)
+            book.age_days = delta.days
+
+    def _inverse_age(self):
+        today = fDate.from_string(fDate.today())
+        for book in self.filtered('date_release'):
+            d = td(days=book.age_days) - today
+            book.date_release = fDate.to_string(d)
+
+    def _search_age(self, operator, value):
+        today = fDate.from_string(fDate.today())
+        value_days = td(days=value)
+        value_date = fDate.to_string(today - value_days)
+        return [('date_release', operator, value_date)]
+
+    publisher_city = fields.Char(
+        'Publisher City',
+        related='publisher_id.city'
     )
 
     # def @api.multi
@@ -103,28 +138,27 @@ class LibraryBook(models.Model):
                     'Release date must be in the past'
                 )
 
-    @api.depends('date_release')
-    def _compute_age(self):
-        today = fDate.from_string(fDate.today())
-        for book in self.filtered('date_release'):
-            delta = (fDate.from_string(book.date_release - today))
-            book.age_days = delta.days
+    @api.model
+    def _referencable_models(self):
+        models = self.env['res.request.link'].search([])
+        return [(x.object, x.name) for x in models]
 
-    def _inverse_age(self):
-        today = fDate.from_string(fDate.today())
-        for book in self.filtered('date_release'):
-            d = td(days=book.age_days) - today
-            book.date_release = fDate.to_string(d)
-
-    def _search_age(self, operator, value):
-        today = fDate.from_string(fDate.today())
-        value_days = td(days=value)
-        value_date = fDate.to_string(today - value_days)
-        return [('date_release', operator, value_date)]
+    ref_doc_id = fields.Reference(
+        selection=_referencable_models,
+        string='Reference Document'
+    )
 
 
 class ResPartner(models.Model):
     _inherit = 'res.partner'
+    _order = 'name'
+    authored_book_ids = fields.Many2many(
+        'library.book', string='Authored Books'
+    )
+    count_books = fields.Integer(
+        'Number of Authored Books',
+        compute='_compute_count_books'
+    )
     book_ids = fields.One2many(
         'library.book', 'publisher_id', string='Published Books'
     )
@@ -133,3 +167,21 @@ class ResPartner(models.Model):
         string='Authored Books',
         # relation='library_book_res_partner_rel'  # optional
     )
+
+    @api.depends('authored_book_ids')
+    def _compute_count_books(self):
+        for r in self:
+            r.count_books = len(r.authored_book_ids)
+
+
+class LibraryMember(models.Model):
+    _name = 'library.member'
+    _inherits = {'res.partner': 'partner_id'}
+    partner_id = fields.Many2one(
+        'res.partner',
+        ondelete='cascade'
+    )
+    # the fields that are specific to Library Members
+    date_start = fields.Date('Member Since')
+    date_end = fields.Date('Termination Date')
+    member_number = fields.Char()
