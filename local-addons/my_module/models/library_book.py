@@ -35,6 +35,7 @@ class LibraryBook(models.Model):
          ('lost', 'Lost')],
         'State')
 
+    # API decorators
     @api.model
     def is_allowed_transition(self, old_state, new_state):
         allowed = [('draft', 'available'),
@@ -45,6 +46,7 @@ class LibraryBook(models.Model):
                    ('lost', 'available')]
         return (old_state, new_state) in allowed
 
+    # API decorators
     @api.multi
     def change_state(self, new_state):
         for book in self:
