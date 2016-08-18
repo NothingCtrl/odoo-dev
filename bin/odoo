@@ -2,5 +2,5 @@
 ROOT=$(dirname $0)/..
 PYTHON=$ROOT/env/bin/python
 ODOO=$ROOT/src/odoo/odoo.py
-$PYTHON $ODOO -c $ROOT/odoo-dev.cfg
+$PYTHON $ODOO -c $ROOT/odoo-dev.cfg --db-filter OdooCodeBook
 exit $?d

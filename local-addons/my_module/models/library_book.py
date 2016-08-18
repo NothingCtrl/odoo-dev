@@ -266,6 +266,16 @@ class LibraryMember(models.Model):
     date_end = fields.Date('Termination Date')
     member_number = fields.Char()
 
+    @api.multi
+    def return_all_books(self):
+        self.ensure_one
+        wizard = self.env['library.returns.wizard']
+        values = {'member_id': self.id}
+        specs = wizard._onchange_spec()
+        updates = wizard.onchange(values, ['member_id'], specs)
+        values.update(updates.get('value', {}))
+        record = wizard.create(values)
+
 
 class LibraryBookLoan(models.Model):
     _name = 'library.book.loan'
@@ -289,15 +299,56 @@ class LibraryLoanWizard(models.TransientModel):
     member_id = fields.Many2one('library.member', 'Member')
     book_ids = fields.Many2many('library.book', 'Books')
 
+    # @api.multi
+    # def record_loans(self):
+    #     for wizard in self:
+    #         books = wizard.book_ids
+    #         loan = self.env['library.book.loan']
+    #         for book in books:
+    #             values = self._prepare_loan(book)
+    #             loan.create(values)
+
     @api.multi
     def record_loans(self):
         for wizard in self:
-            books = wizard.book_ids
             loan = self.env['library.book.loan']
             for book in wizard.book_ids:
                 values = self._prepare_loan(book)
                 loan.create(values)
+            # member = wizard.member_id
+            # books = wizard.book_ids
+            # loan = self.env['library.book.loan']
+            # for book in wizard.book_ids:
+            #     loan.create({'member_id': wizard.member_id,
+            #                  'book_id': book.id})
 
     @api.multi
     def _prepare_loan(self, book):
         return {'member_id': self.member_id.id, 'book_id': book.id}
+
+
+class LibraryReturnsWizard(models.TransientModel):
+    _name = 'library.returns.wizard'
+
+    member_id = fields.Many2one('library.member', 'Member')
+    book_ids = fields.Many2many('library.book', 'Books')
+
+    @api.multi
+    def record_returns(self):
+        loan = self.env['library.book.loan']
+        for rec in self:
+            loans = loan.search(
+                [('state', '=', 'ongoing'),
+                 ('book_id', 'in', self.book_ids.ids),
+                 ('member_id', '=', self.member_id.id)]
+            )
+            loans.write({'state': 'done'})
+
+    @api.onchange('member_id')
+    def onchange_member(self):
+        loan = self.env['library.book.loan']
+        loans = loan.search(
+            [('state', '=', 'ongoing'),
+             ('member_id', '=', self.member_id.id)]
+        )
+        self.book_ids = loans.mapped('book_id')
