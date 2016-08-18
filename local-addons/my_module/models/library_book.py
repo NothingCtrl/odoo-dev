@@ -4,6 +4,7 @@ from openerp.addons import decimal_precision as dp
 from openerp import api
 from openerp.fields import Date as fDate
 from datetime import timedelta as td
+from openerp.exceptions import UserError
 
 
 class BaseArchive(models.AbstractModel):
@@ -22,6 +23,8 @@ class LibraryBook(models.Model):
     _order = 'date_release desc, name'
     _rec_name = 'short_name'
     name = fields.Char('Title', required=True)
+    manager_remarks = fields.Text('Manager Remarks')
+    isbn = fields.Char('ISBN')
     short_name = fields.Char(
         string='Short Title',
         size=100,  # For Char only
@@ -134,14 +137,15 @@ class LibraryBook(models.Model):
     )
 
     # def @api.multi
+    @api.model
     def name_get(self):
         result = []
-        for record in self:
-            result.append(
-                (record.id,
-                 u"%s (%s)" % (record.name, record.date_release)
-                 ))
-        return result
+        for book in self:
+            authors = book.author_ids.mapped('name')
+            name = u'%s (%s)' % (book.name,
+                                 u', '.join(authors))
+            result.append((book.id, name))
+            return result
 
     # Note: neu database da tao roi moi them dieu kieu sql thi khong thay duoc ap dung
     # pic database khong thay ap dung dieu kien: https://goo.gl/VroXZo
@@ -174,6 +178,55 @@ class LibraryBook(models.Model):
     def get_all_library_members(self):
         library_member_model = self.env['library.member']
         return library_member_model.search([])
+
+    @api.model
+    @api.returns('self', lambda rec: rec.id)
+    def create(self, values):
+        if not self.user_has_groups(
+                'library.group_library_manager'):
+            if 'manager_remarks' in values:
+                raise UserError(
+                    'You are not allowed to modify '
+                    'manager_remarks'
+                )
+        return super(LibraryBook, self).create(values)
+
+    @api.multi
+    def write(self, values):
+        if not self.user_has_groups(
+                'library.group_library_manager'):
+            if 'manager_remarks' in values:
+                raise UserError(
+                    'You are not allowed to modify '
+                    'manager_remarks'
+                )
+        return super(LibraryBook, self).write(values)
+
+    @api.model
+    def fields_get(self, allfields=None, write_access=True, attributes=None):
+        fields = super(LibraryBook, self).fields_get(
+            allfields=allfields,
+            write_access=write_access,
+            attributes=attributes
+        )
+        if not self.user_has_groups(
+                'library.group_library_manager'):
+            if 'manager_remarks' in fields:
+                fields['manager_remarks']['readonly'] = True
+        return fields
+
+    @api.model
+    def _name_search(self, name='', args=None, operator='ilike', limit=100, name_get_uid=None):
+        args = [] if args is None else args.copy()
+        if not (name == '' and operator == 'ilike'):
+            args += ['|', '|',
+                     ('name', operator, name),
+                     ('isbn', operator, name),
+                     ('author_ids.name', operator, name)
+                     ]
+        return super(LibraryBook, self)._name_search(
+            name='', args=args, operator='ilike',
+            limit=limit, name_get_uid=name_get_uid)
 
 
 class ResPartner(models.Model):
@@ -212,3 +265,39 @@ class LibraryMember(models.Model):
     date_start = fields.Date('Member Since')
     date_end = fields.Date('Termination Date')
     member_number = fields.Char()
+
+
+class LibraryBookLoan(models.Model):
+    _name = 'library.book.loan'
+    book_id = fields.Many2one('library.book', 'Book',
+                              required=True)
+    member_id = fields.Many2one('library.member', 'Borrower',
+                                required=True)
+    state = fields.Selection(
+        [
+            ('ongoing', 'Ongoing'),
+            ('done', 'Done')
+        ],
+        'State',
+        default='ongoing',
+        required=True
+    )
+
+
+class LibraryLoanWizard(models.TransientModel):
+    _name = 'library.loan.wizard'
+    member_id = fields.Many2one('library.member', 'Member')
+    book_ids = fields.Many2many('library.book', 'Books')
+
+    @api.multi
+    def record_loans(self):
+        for wizard in self:
+            books = wizard.book_ids
+            loan = self.env['library.book.loan']
+            for book in wizard.book_ids:
+                values = self._prepare_loan(book)
+                loan.create(values)
+
+    @api.multi
+    def _prepare_loan(self, book):
+        return {'member_id': self.member_id.id, 'book_id': book.id}

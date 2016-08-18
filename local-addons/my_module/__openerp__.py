@@ -6,9 +6,13 @@
     'author': "Duong Bao Thang",
     'license': "AGPL-3",
     'website': "http://camratus.com",
-    'category': "Uncategorized",
+    'category': "Library",
     'version': "9.0.1.0.0",
     'depends': ['base', 'decimal_precision'],
-    'data': ['views/library_book.xml'],
+    'data': [
+        'security/ir.model.access.csv',
+        'security/library_security.xml',
+        'views/library_book.xml'
+    ],
     #'demo': ['demo.xml'],
 }
